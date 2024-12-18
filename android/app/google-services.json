@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357765110065",
+    "project_id": "lexaglot",
+    "storage_bucket": "lexaglot.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357765110065:android:5603a64f4f8e5f8fe9b810",
+        "android_client_info": {
+          "package_name": "com.lexaglot.lexaglot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4aihMMumactiml11jO_He88PhRflIaeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
