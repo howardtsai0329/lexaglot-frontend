@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:lexaglot/constants/routes.dart';
 import 'package:lexaglot/enums/menu_action.dart';
 import 'package:lexaglot/utilities/dialogs/logout_dialog.dart';
+import 'package:lexaglot/views/matching_pairs_view.dart';
 
-class StartMenuView extends StatefulWidget {
+class StartMenuView extends StatelessWidget {
   const StartMenuView({super.key});
 
-  @override
-  State<StartMenuView> createState() => _StartMenuViewState();
-}
-
-class _StartMenuViewState extends State<StartMenuView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,10 +44,10 @@ class _StartMenuViewState extends State<StartMenuView> {
           children: [
             IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  matchingPairsRoute,
-                  (_) => false,
-                );
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return const MatchingPairsView();
+                }));
               },
               icon: const Icon(Icons.play_circle),
               color: Colors.lightGreen,
