@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lexaglot/excercises/matching_pairs/matching_buttons.dart';
+
+import 'package:lexaglot/excercises/general/colored_button.dart.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_card.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_game.dart';
 import 'package:lexaglot/mock_inputs/mock_matching_pairs.dart';
+import 'package:lexaglot/views/translate_sentence_view.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class MatchingPairsView extends StatefulWidget {
   const MatchingPairsView({super.key});
@@ -14,25 +17,39 @@ class MatchingPairsView extends StatefulWidget {
 }
 
 class _MatchingPairsViewState extends State<MatchingPairsView> {
-  MatchingPairsGame? game;
-  Timer? timer;
+  late MatchingPairsGame game;
+  late Timer timer;
+  late int total;
 
   @override
   void initState() {
     super.initState();
     game = MatchingPairsGame(mockMatchingPairsInput);
+    total = mockMatchingPairsInput.length;
     startTimer();
   }
 
   startTimer() {
     timer = Timer.periodic(const Duration(microseconds: 100), (t) {
       setState(() {});
+      if (game.isGameOver) {
+        timer.cancel();
+      }
     });
   }
 
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   void _resetGame() {
-    game!.resetGame();
-    setState(() {});
+    game.resetGame();
+    setState(() {
+      timer.cancel();
+      startTimer();
+    });
   }
 
   @override
@@ -45,31 +62,61 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
         child: Column(
           children: [
             Expanded(
-              flex: 5,
+              flex: 1,
+              child: LinearPercentIndicator(
+                lineHeight: 14.0,
+                percent: game.answered / total,
+                backgroundColor: Colors.grey,
+                progressColor: Colors.amberAccent[700],
+              ),
+            ),
+            Expanded(
+              flex: 10,
               child: GridView.count(
                 crossAxisCount: mockMatchingPairsInput.length ~/ 2,
-                children: List.generate(game!.matchingPairs.length, (index) {
+                childAspectRatio: 3,
+                mainAxisSpacing: 30,
+                crossAxisSpacing: 10,
+                children: List.generate(game.matchingPairs.length, (index) {
                   return MatchingPairsCard(
-                    matchingPairItem: game!.matchingPairs[index],
-                    onItemPressed: game!.onPairPressed,
+                    matchingPairItem: game.matchingPairs[index],
+                    onItemPressed: game.onPairPressed,
                     index: index,
                   );
                 }),
               ),
             ),
-            if (game!.isGameOver)
+            if (game.isGameOver)
               Expanded(
-                flex: 1,
-                child: MatchingButtons(
-                  title: 'Try Again',
-                  onPressed: () => _resetGame(),
+                flex: 2,
+                child: GridView.count(
+                  crossAxisCount: 1,
+                  childAspectRatio: 7,
+                  children: [
+                    ColoredButton(
+                      title: 'Play Again',
+                      onPressed: () => _resetGame(),
+                      backgroundColor: Colors.amberAccent[700],
+                      textColor: Colors.black,
+                    ),
+                    ColoredButton(
+                      title: 'Next Exercise',
+                      onPressed: () => Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return const TranslateSentenceView();
+                        }),
+                      ),
+                      backgroundColor: Colors.green,
+                      textColor: Colors.black,
+                    ),
+                  ],
                 ),
               )
             else
               const Expanded(
-                flex: 1,
+                flex: 2,
                 child: SizedBox(),
-              )
+              ),
           ],
         ),
       ),

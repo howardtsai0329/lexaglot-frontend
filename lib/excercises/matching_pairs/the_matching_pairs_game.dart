@@ -8,7 +8,7 @@ class TheMatchingPairsGame extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const StartMenuView(),
-      title: 'lsdjhfsadljfh',
+      title: 'I have no idea what this page does',
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
     );

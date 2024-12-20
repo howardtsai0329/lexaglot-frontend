@@ -5,9 +5,14 @@ import 'package:lexaglot/enums/menu_action.dart';
 import 'package:lexaglot/utilities/dialogs/logout_dialog.dart';
 import 'package:lexaglot/views/matching_pairs_view.dart';
 
-class StartMenuView extends StatelessWidget {
+class StartMenuView extends StatefulWidget {
   const StartMenuView({super.key});
 
+  @override
+  State<StartMenuView> createState() => _StartMenuViewState();
+}
+
+class _StartMenuViewState extends State<StartMenuView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,10 +49,11 @@ class StartMenuView extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return const MatchingPairsView();
-                }));
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const MatchingPairsView();
+                  }),
+                );
               },
               icon: const Icon(Icons.play_circle),
               color: Colors.lightGreen,

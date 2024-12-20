@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ItemState { answered, notAnswered, wrong, correct }
+enum ItemState { answered, notAnswered, wrong, correct, chosen }
 
 class MatchingPairItem {
   final String word;
@@ -23,6 +23,8 @@ class MatchingPairItem {
         return Colors.red;
       case ItemState.correct:
         return Colors.green;
+      case ItemState.chosen:
+        return Colors.lightGreen;
     }
   }
 }

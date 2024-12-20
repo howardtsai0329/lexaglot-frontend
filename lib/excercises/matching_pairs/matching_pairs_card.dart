@@ -30,7 +30,7 @@ class MatchingPairsCard extends StatelessWidget {
         child: Center(
           child: Text(
             matchingPairItem.word,
-            style: const TextStyle(fontSize: 30),
+            style: const TextStyle(fontSize: 20, color: Colors.black),
           ),
         ),
       ),
