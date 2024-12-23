@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pair_item.dart';
 
-class MatchingPairsCard extends StatelessWidget {
+class MatchingPairsButton extends StatelessWidget {
   final MatchingPairItem matchingPairItem;
   final Function(int) onItemPressed;
   final int index;
-  const MatchingPairsCard(
+  const MatchingPairsButton(
       {super.key,
       required this.matchingPairItem,
       required this.onItemPressed,

@@ -2,7 +2,7 @@ import 'package:lexaglot/excercises/matching_pairs/matching_pair_item.dart';
 import 'dart:async';
 
 class MatchingPairsGame {
-  Map mockMatchingPairsInput;
+  Map matchingPairsInput;
   List<MatchingPairItem> matchingPairs = [];
   List<MatchingPairItem> leftMatchingPairs = [];
   List<MatchingPairItem> rightMatchingPairs = [];
@@ -10,7 +10,7 @@ class MatchingPairsGame {
   bool isGameOver = false;
   int answered = 0;
 
-  MatchingPairsGame(this.mockMatchingPairsInput) {
+  MatchingPairsGame(this.matchingPairsInput) {
     generatePairs();
   }
 
@@ -19,7 +19,7 @@ class MatchingPairsGame {
     leftMatchingPairs = [];
     rightMatchingPairs = [];
     code = 0;
-    for (final pairs in mockMatchingPairsInput.entries) {
+    for (final pairs in matchingPairsInput.entries) {
       leftMatchingPairs.add(MatchingPairItem(pairs.key, code));
       rightMatchingPairs.add(MatchingPairItem(pairs.value, code));
       code++;

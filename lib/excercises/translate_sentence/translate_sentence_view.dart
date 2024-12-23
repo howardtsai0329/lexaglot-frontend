@@ -1,31 +1,31 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:lexaglot/excercises/general/colored_button.dart.dart';
-import 'package:lexaglot/excercises/matching_pairs/matching_pairs_button.dart';
-import 'package:lexaglot/excercises/matching_pairs/matching_pairs_game.dart';
-import 'package:lexaglot/mock_inputs/mock_matching_pairs.dart';
-import 'package:lexaglot/excercises/translate_sentence/translate_sentence_view.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:lexaglot/excercises/translate_sentence/translate_sentence_button.dart';
+import 'package:lexaglot/excercises/translate_sentence/translate_sentence_game.dart';
+import 'package:lexaglot/excercises/translate_sentence/translate_sentence_item.dart';
+import 'package:lexaglot/mock_inputs/mock_translate_sentence.dart';
 
-class MatchingPairsView extends StatefulWidget {
-  const MatchingPairsView({super.key});
+class TranslateSentenceView extends StatefulWidget {
+  const TranslateSentenceView({super.key});
 
   @override
-  State<MatchingPairsView> createState() => _MatchingPairsViewState();
+  State<TranslateSentenceView> createState() => _TranslateSentenceViewState();
 }
 
-class _MatchingPairsViewState extends State<MatchingPairsView> {
-  late MatchingPairsGame game;
+class _TranslateSentenceViewState extends State<TranslateSentenceView> {
+  late TranslateSentenceGame game;
   late Timer timer;
-  late int total;
 
   @override
   void initState() {
     super.initState();
-    game = MatchingPairsGame(mockMatchingPairsInput);
-    total = mockMatchingPairsInput.length;
+    game = TranslateSentenceGame(
+      correctTranslation,
+      wrongWords,
+      sentenceBeforeTranslatiom,
+    );
     startTimer();
   }
 
@@ -56,34 +56,41 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Matching Pairs'),
+        title: const Text('Translate Sentence'),
       ),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              flex: 1,
-              child: LinearPercentIndicator(
-                lineHeight: 14.0,
-                percent: game.answered / total,
-                backgroundColor: Colors.grey,
-                progressColor: Colors.amberAccent[700],
+              child: Text(
+                game.beforeTranslation,
+                style: const TextStyle(fontSize: 30),
               ),
             ),
             Expanded(
               flex: 10,
-              child: GridView.count(
-                crossAxisCount: mockMatchingPairsInput.length ~/ 2,
-                childAspectRatio: 3,
-                mainAxisSpacing: 30,
-                crossAxisSpacing: 10,
-                children: List.generate(game.matchingPairs.length, (index) {
-                  return MatchingPairsButton(
-                    matchingPairItem: game.matchingPairs[index],
-                    onItemPressed: game.onPairPressed,
-                    index: index,
+              child: Wrap(
+                children: List.generate(game.actives.length, (index) {
+                  return TranslateSentenceButton(
+                    translateSentenceItem: game.actives[index],
+                    onPressed: game.onActivePressed,
+                    isActive: true,
                   );
                 }),
+              ),
+            ),
+            Expanded(
+              flex: 10,
+              child: Align(
+                child: Wrap(
+                  children: List.generate(game.options.length, (index) {
+                    return TranslateSentenceButton(
+                      translateSentenceItem: game.options[index],
+                      onPressed: game.onShowPressed,
+                      isActive: game.options[index].state == ItemState.show,
+                    );
+                  }),
+                ),
               ),
             ),
             if (game.isGameOver)
