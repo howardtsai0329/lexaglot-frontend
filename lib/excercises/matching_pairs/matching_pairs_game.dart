@@ -1,4 +1,4 @@
-import 'package:lexaglot/excercises/matching_pairs/matching_pair_item.dart';
+import 'package:lexaglot/excercises/matching_pairs/matching_pairs_item.dart';
 import 'dart:async';
 
 class MatchingPairsGame {

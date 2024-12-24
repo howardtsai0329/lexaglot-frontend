@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lexaglot/excercises/matching_pairs/matching_pair_item.dart';
+import 'package:lexaglot/excercises/matching_pairs/matching_pairs_item.dart';
 
 class MatchingPairsButton extends StatelessWidget {
   final MatchingPairItem matchingPairItem;

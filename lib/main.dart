@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lexaglot/constants/routes.dart';
-import 'package:lexaglot/excercises/matching_pairs/the_matching_pairs_game.dart';
 import 'package:lexaglot/firebase_options.dart';
-import 'package:lexaglot/views/matching_pairs_view.dart';
+import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
 import 'package:lexaglot/views/login_view.dart';
 import 'package:lexaglot/views/register_view.dart';
 import 'package:lexaglot/views/start_menu_view.dart';
@@ -42,7 +41,7 @@ class HomePage extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified) {
-                return const TheMatchingPairsGame();
+                return const StartMenuView();
               } else {
                 return const VerifyEmailView();
               }

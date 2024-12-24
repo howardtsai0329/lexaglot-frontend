@@ -7,7 +7,6 @@ class TranslateSentenceGame {
   List<TranslateSentenceItem> options = [];
   List<TranslateSentenceItem> actives = [];
 
-  int code = 0;
   bool isGameOver = false;
   int answered = 0;
 
@@ -21,10 +20,8 @@ class TranslateSentenceGame {
 
   void generateOptions() {
     options = [];
-    code = 0;
     for (final word in words) {
-      options.add(TranslateSentenceItem(word, code));
-      code++;
+      options.add(TranslateSentenceItem(word));
     }
     options.shuffle();
   }
@@ -35,24 +32,14 @@ class TranslateSentenceGame {
     isGameOver = false;
   }
 
-  void onShowPressed(int code) {
-    for (final option in options) {
-      if (option.code == code) {
-        actives.add(option);
-        option.state = ItemState.hidden;
-        break;
-      }
-    }
+  void onShowPressed(TranslateSentenceItem item) {
+    actives.add(item);
+    item.state = ItemState.hidden;
   }
 
-  void onActivePressed(int code) {
-    for (final active in actives) {
-      if (active.code == code) {
-        actives.remove(active);
-        active.state = ItemState.show;
-        break;
-      }
-    }
+  void onActivePressed(TranslateSentenceItem item) {
+    actives.remove(item);
+    item.state = ItemState.show;
   }
 
   void checkAns() {
