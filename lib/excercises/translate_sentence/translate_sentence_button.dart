@@ -16,7 +16,7 @@ class TranslateSentenceButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
+        backgroundColor: translateSentenceItem.color,
         textStyle: const TextStyle(fontSize: 18),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25))),

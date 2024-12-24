@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ItemState { show, hidden }
+enum ItemState { show, correct, wrong, hidden }
 
 enum OnOff { active, inactive }
 
@@ -19,10 +19,12 @@ class TranslateSentenceItem {
 
   Color get color {
     switch (state) {
-      case ItemState.show:
+      case ItemState.show || ItemState.hidden:
         return Colors.white;
-      case ItemState.hidden:
-        return Colors.grey;
+      case ItemState.correct:
+        return Colors.green;
+      case ItemState.wrong:
+        return Colors.red;
     }
   }
 }

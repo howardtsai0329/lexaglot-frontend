@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lexaglot/excercises/complete_translation/complete_translation_view.dart';
 import 'package:lexaglot/excercises/general/colored_button.dart.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_button.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_game.dart';
@@ -22,9 +23,9 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
   void initState() {
     super.initState();
     game = TranslateSentenceGame(
-      correctTranslation,
-      wrongWords,
-      sentenceBeforeTranslatiom,
+      correctTranslations,
+      words,
+      sentenceBeforeTranslation,
     );
     startTimer();
   }
@@ -62,13 +63,27 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
         child: Column(
           children: [
             Expanded(
-              child: Text(
-                game.beforeTranslation,
-                style: const TextStyle(fontSize: 30),
-              ),
-            ),
+                flex: 10,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 5,
+                      child: Image.asset('assets/images/Shiro_Anime_HQ.webp'),
+                    ),
+                    const Expanded(
+                      child: SizedBox(),
+                    ),
+                    const Expanded(
+                      flex: 6,
+                      child: Text(
+                        sentenceBeforeTranslation,
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    )
+                  ],
+                )),
             Expanded(
-              flex: 10,
+              flex: 7,
               child: Wrap(
                 children: List.generate(game.actives.length, (index) {
                   return TranslateSentenceButton(
@@ -80,7 +95,7 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
               ),
             ),
             Expanded(
-              flex: 10,
+              flex: 7,
               child: Align(
                 child: Wrap(
                   children: List.generate(game.options.length, (index) {
@@ -95,7 +110,7 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
             ),
             if (game.isGameOver)
               Expanded(
-                flex: 2,
+                flex: 4,
                 child: GridView.count(
                   crossAxisCount: 1,
                   childAspectRatio: 7,
@@ -110,7 +125,7 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
                       title: 'Next Exercise',
                       onPressed: () => Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (BuildContext context) {
-                          return const TranslateSentenceView();
+                          return const CompleteTranslationView();
                         }),
                       ),
                       backgroundColor: Colors.green,
@@ -118,10 +133,23 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
                     ),
                   ],
                 ),
-              )
-            else
+              ),
+            if (!game.isGameOver)
               const Expanded(
+                child: SizedBox(),
+              ),
+            if (!game.isGameOver)
+              Expanded(
                 flex: 2,
+                child: ColoredButton(
+                  title: 'Check Answers',
+                  onPressed: () => game.checkAns(),
+                  backgroundColor: Colors.green,
+                  textColor: Colors.black,
+                ),
+              ),
+            if (!game.isGameOver)
+              const Expanded(
                 child: SizedBox(),
               ),
           ],

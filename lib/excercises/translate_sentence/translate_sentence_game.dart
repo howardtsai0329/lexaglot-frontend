@@ -2,8 +2,8 @@ import 'package:lexaglot/excercises/translate_sentence/translate_sentence_item.d
 
 class TranslateSentenceGame {
   String beforeTranslation = '';
-  List<String> correctTranslation = [];
-  List<String> wrongWords = [];
+  List<String> correctTranslations = [];
+  List<String> words = [];
   List<TranslateSentenceItem> options = [];
   List<TranslateSentenceItem> actives = [];
 
@@ -12,8 +12,8 @@ class TranslateSentenceGame {
   int answered = 0;
 
   TranslateSentenceGame(
-    this.correctTranslation,
-    this.wrongWords,
+    this.correctTranslations,
+    this.words,
     this.beforeTranslation,
   ) {
     generateOptions();
@@ -22,11 +22,7 @@ class TranslateSentenceGame {
   void generateOptions() {
     options = [];
     code = 0;
-    for (final word in correctTranslation) {
-      options.add(TranslateSentenceItem(word, code));
-      code++;
-    }
-    for (final word in wrongWords) {
+    for (final word in words) {
       options.add(TranslateSentenceItem(word, code));
       code++;
     }
@@ -56,6 +52,32 @@ class TranslateSentenceGame {
         active.state = ItemState.show;
         break;
       }
+    }
+  }
+
+  void checkAns() {
+    List ans = [];
+    for (final active in actives) {
+      ans.add(active.word);
+    }
+    String joined = ans.join(' ');
+    for (final translation in correctTranslations) {
+      if (joined == translation) {
+        isGameOver = true;
+        for (final active in actives) {
+          active.state = ItemState.correct;
+        }
+      }
+    }
+    if (!isGameOver) {
+      for (final active in actives) {
+        active.state = ItemState.wrong;
+      }
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        for (final active in actives) {
+          active.state = ItemState.hidden;
+        }
+      });
     }
   }
 }

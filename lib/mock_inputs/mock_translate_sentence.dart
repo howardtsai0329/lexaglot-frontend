@@ -1,25 +1,22 @@
-const String sentenceBeforeTranslatiom = '這是一個翻譯句子練習的範例';
+const String sentenceBeforeTranslation = '我昨天在那間店裡看到一件新衣服';
 
-const List<String> correctTranslation = [
-  'This is',
-  'an',
-  'example',
-  'of',
-  'a',
-  'sentence translate',
-  'excercise',
+const List<String> correctTranslations = [
+  'yesterday at the store I saw a new shirt',
+  'I saw a new shirt yesterday at the store',
+  'I saw a new shirt at the store yesterday',
 ];
 
-const List<String> wrongWords = [
+const List<String> words = [
+  'yesterday',
+  'at',
+  'I',
+  'of',
+  'saw',
+  'a new shirt',
+  'the store',
+  'colorful',
   'wrong',
   'other stuff',
-  'ur mom',
+  'mouse',
   'nope',
 ];
-
-const mockTranslateSentenceInput = {
-  sentenceBeforeTranslatiom: (
-    correctTranslation,
-    wrongWords,
-  )
-};
