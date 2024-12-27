@@ -48,15 +48,12 @@ class TranslateSentenceGame {
       ans.add(active.word);
     }
     String joined = ans.join(' ');
-    for (final translation in correctTranslations) {
-      if (joined == translation) {
-        isGameOver = true;
-        for (final active in actives) {
-          active.state = ItemState.correct;
-        }
+    if (correctTranslations.contains(joined)) {
+      isGameOver = true;
+      for (final active in actives) {
+        active.state = ItemState.correct;
       }
-    }
-    if (!isGameOver) {
+    } else {
       for (final active in actives) {
         active.state = ItemState.wrong;
       }

@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lexaglot/constants/routes.dart';
 import 'package:lexaglot/enums/menu_action.dart';
-import 'package:lexaglot/utilities/dialogs/logout_dialog.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
+import 'package:lexaglot/utilities/dialogs/logout_dialog.dart';
 
 class StartMenuView extends StatefulWidget {
   const StartMenuView({super.key});
