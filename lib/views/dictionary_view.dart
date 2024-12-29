@@ -2,20 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lexaglot/constants/routes.dart';
 import 'package:lexaglot/enums/menu_action.dart';
-import 'package:lexaglot/excercises/general/colored_button.dart.dart';
-import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
 import 'package:lexaglot/utilities/dialogs/logout_dialog.dart';
 import 'package:lexaglot/views/chat_view.dart';
-import 'package:lexaglot/views/dictionary_view.dart';
+import 'package:lexaglot/views/start_menu_view.dart';
 
-class StartMenuView extends StatefulWidget {
-  const StartMenuView({super.key});
+class DictionaryView extends StatefulWidget {
+  const DictionaryView({super.key});
 
   @override
-  State<StartMenuView> createState() => _StartMenuViewState();
+  State<DictionaryView> createState() => _DictionaryViewState();
 }
 
-class _StartMenuViewState extends State<StartMenuView> {
+class _DictionaryViewState extends State<DictionaryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,33 +37,17 @@ class _StartMenuViewState extends State<StartMenuView> {
             itemBuilder: (context) {
               return const [
                 PopupMenuItem<MenuAction>(
-                    value: MenuAction.logout, child: Text('Log out'))
+                  value: MenuAction.logout,
+                  child: Text('Log out'),
+                )
               ];
             },
           )
         ],
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/Shiro_Anime_HQ.webp',
-              height: 400.0,
-            ),
-            ColoredButton(
-              title: 'Learn',
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (BuildContext context) {
-                    return const MatchingPairsView();
-                  }),
-                );
-              },
-              backgroundColor: Colors.green,
-              textColor: Colors.black,
-            ),
-          ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -87,23 +69,23 @@ class _StartMenuViewState extends State<StartMenuView> {
               iconSize: 50,
             ),
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.home),
-              iconSize: 50,
-              color: Colors.green,
-            ),
-            IconButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return const DictionaryView();
+                      return const StartMenuView();
                     },
                   ),
                 );
               },
+              iconSize: 50,
+              icon: const Icon(Icons.home),
+            ),
+            IconButton(
+              onPressed: () {},
               icon: const Icon(Icons.book),
               iconSize: 50,
+              color: Colors.green,
             ),
           ],
         ),

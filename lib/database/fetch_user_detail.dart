@@ -37,9 +37,13 @@ class UserDetail {
 
 Future<UserDetail> fetchUserDetail() async {
   const url = 'http://172.24.105.161:8000/users/me';
-  final token = await getToken() ?? '';
+  var token = await getToken() ?? '';
   if (token == '') {
     const FormatException('No tokens returned');
+  } else if (isTokenExpired(token)) {
+    dev.log(token);
+    token = await refreshToken();
+    dev.log(token);
   } else {
     dev.log(token);
   }

@@ -19,7 +19,7 @@ class ColoredButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
-        height: 10.0,
+        height: 100.0,
         width: double.infinity,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
