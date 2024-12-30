@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lexaglot/excercises/complete_translation/complete_translation_game.dart';
 import 'package:lexaglot/excercises/general/colored_button.dart.dart';
@@ -17,7 +15,6 @@ class CompleteTranslationView extends StatefulWidget {
 
 class _CompleteTranslationViewState extends State<CompleteTranslationView> {
   late CompleteTranslationGame game;
-  late Timer timer;
 
   @override
   void initState() {
@@ -28,29 +25,22 @@ class _CompleteTranslationViewState extends State<CompleteTranslationView> {
       missingWord,
       validWords,
     );
-    startTimer();
-  }
-
-  startTimer() {
-    timer = Timer.periodic(const Duration(microseconds: 100), (t) {
-      setState(() {});
-      if (game.isGameOver) {
-        timer.cancel();
-      }
-    });
   }
 
   @override
   void dispose() {
-    timer.cancel();
     super.dispose();
   }
 
-  void _resetGame() {
-    game.resetGame();
+  void _checkAnswers() {
     setState(() {
-      timer.cancel();
-      startTimer();
+      game.checkAns();
+    });
+  }
+
+  void _resetGame() {
+    setState(() {
+      game.resetGame();
     });
   }
 
@@ -90,26 +80,30 @@ class _CompleteTranslationViewState extends State<CompleteTranslationView> {
             ),
             if (game.isGameOver && game.isCorrect)
               Expanded(
-                  flex: 4,
-                  child: CorrectAnswerBanner(
-                    message: 'You are correct',
-                    button: ColoredButton(
-                        title: 'Continue',
-                        onPressed: () {},
-                        backgroundColor: Colors.lightGreen,
-                        textColor: Colors.black),
-                  )),
+                flex: 4,
+                child: CorrectAnswerBanner(
+                  message: 'You are correct',
+                  button: ColoredButton(
+                      title: 'Continue',
+                      onPressed: () {},
+                      textColor: Colors.black),
+                ),
+              ),
             if (game.isGameOver && !game.isCorrect)
               Expanded(
-                  flex: 4,
-                  child: WrongAnswerBanner(
-                    message: 'You are wrong',
-                    button: ColoredButton(
-                        title: 'Try again',
-                        onPressed: () => _resetGame(),
-                        backgroundColor: Colors.red,
-                        textColor: Colors.black),
-                  )),
+                flex: 4,
+                child: WrongAnswerBanner(
+                  message: 'You are wrong',
+                  button: ColoredButton(
+                      title: 'Try again',
+                      onPressed: () => _resetGame(),
+                      gradientColors: [
+                        Colors.red.shade400,
+                        Colors.red.shade700,
+                      ],
+                      textColor: Colors.black),
+                ),
+              ),
             if (!game.isGameOver)
               const Expanded(
                 child: SizedBox(),
@@ -119,8 +113,7 @@ class _CompleteTranslationViewState extends State<CompleteTranslationView> {
                 flex: 2,
                 child: ColoredButton(
                   title: 'Check Answers',
-                  onPressed: () => game.checkAns(),
-                  backgroundColor: Colors.green,
+                  onPressed: () => _checkAnswers(),
                   textColor: Colors.black,
                 ),
               ),

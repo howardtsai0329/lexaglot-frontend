@@ -5,6 +5,7 @@ import 'package:lexaglot/enums/menu_action.dart';
 import 'package:lexaglot/utilities/dialogs/logout_dialog.dart';
 import 'package:lexaglot/views/chat_view.dart';
 import 'package:lexaglot/views/dictionary_view.dart';
+import 'package:lexaglot/views/settings_view.dart';
 import 'package:lexaglot/views/start_menu_view.dart';
 
 class HomePageView extends StatefulWidget {
@@ -35,12 +36,24 @@ class _HomePageViewState extends State<HomePageView> {
                         (_) => false,
                       );
                     }
+                  case MenuAction.settings:
+                    Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const SettingsView();
+                  }),
+                );
                 }
               },
               itemBuilder: (context) {
                 return const [
                   PopupMenuItem<MenuAction>(
-                      value: MenuAction.logout, child: Text('Log out'))
+                    value: MenuAction.settings,
+                    child: Text('Settings'),
+                  ),
+                  PopupMenuItem<MenuAction>(
+                    value: MenuAction.logout,
+                    child: Text('Log out'),
+                  ),
                 ];
               },
             )

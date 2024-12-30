@@ -67,7 +67,7 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
                 lineHeight: 14.0,
                 percent: game.answered / total,
                 backgroundColor: Colors.grey,
-                progressColor: Colors.amberAccent[700],
+                progressColor: Colors.lightGreen,
               ),
             ),
             Expanded(
@@ -96,7 +96,10 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
                     ColoredButton(
                       title: 'Play Again',
                       onPressed: () => _resetGame(),
-                      backgroundColor: Colors.amberAccent[700],
+                      gradientColors: [
+                        Colors.blue.shade500,
+                        Colors.teal.shade400,
+                      ],
                       textColor: Colors.black,
                     ),
                     ColoredButton(
@@ -106,7 +109,6 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
                           return const TranslateSentenceView();
                         }),
                       ),
-                      backgroundColor: Colors.green,
                       textColor: Colors.black,
                     ),
                   ],

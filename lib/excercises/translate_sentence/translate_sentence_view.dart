@@ -118,7 +118,10 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
                     ColoredButton(
                       title: 'Play Again',
                       onPressed: () => _resetGame(),
-                      backgroundColor: Colors.amberAccent[700],
+                      gradientColors: [
+                        Colors.blue.shade500,
+                        Colors.teal.shade400,
+                      ],
                       textColor: Colors.black,
                     ),
                     ColoredButton(
@@ -128,7 +131,6 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
                           return const CompleteTranslationView();
                         }),
                       ),
-                      backgroundColor: Colors.green,
                       textColor: Colors.black,
                     ),
                   ],
@@ -144,7 +146,6 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
                 child: ColoredButton(
                   title: 'Check Answers',
                   onPressed: () => game.checkAns(),
-                  backgroundColor: Colors.green,
                   textColor: Colors.black,
                 ),
               ),

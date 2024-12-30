@@ -30,7 +30,6 @@ class _StartMenuViewState extends State<StartMenuView> {
                   }),
                 );
               },
-              backgroundColor: Colors.green,
               textColor: Colors.black,
             ),
           ],

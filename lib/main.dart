@@ -6,32 +6,55 @@ import 'package:lexaglot/constants/routes.dart';
 // import 'package:lexaglot/database/login.dart';
 import 'package:lexaglot/firebase_options.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
+import 'package:lexaglot/utilities/providers/theme_provider.dart';
 import 'package:lexaglot/views/home_page_view.dart';
 import 'package:lexaglot/views/login_view.dart';
 import 'package:lexaglot/views/register_view.dart';
 import 'package:lexaglot/views/start_menu_view.dart';
 import 'package:lexaglot/views/verify_email_view.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(
-    title: 'Flutter Demo',
-    theme: ThemeData.dark(),
-    debugShowCheckedModeBanner: false,
-    home: const HomePage(),
-    routes: {
-      loginRoute: (context) => const LoginView(),
-      registerRoute: (context) => const RegisterView(),
-      startMenuRoute: (context) => const StartMenuView(),
-      verifyEmailRoute: (context) => const VerifyEmailView(),
-      matchingPairsRoute: (context) => const MatchingPairsView(),
-    },
-  ));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
-class HomePage extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      themeMode: Provider.of<ThemeProvider>(context).themeMode,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
+      routes: {
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        startMenuRoute: (context) => const StartMenuView(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
+        matchingPairsRoute: (context) => const MatchingPairsView(),
+      },
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

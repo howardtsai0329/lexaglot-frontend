@@ -4,34 +4,57 @@ class ColoredButton extends StatelessWidget {
   const ColoredButton({
     required this.title,
     required this.onPressed,
-    required this.backgroundColor,
-    required this.textColor,
+    this.gradientColors,
+    this.textColor = Colors.white,
     super.key,
   });
 
   final String title;
   final VoidCallback onPressed;
-  final Color? backgroundColor;
-  final Color? textColor;
+  final List<Color>? gradientColors;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: SizedBox(
-        height: 100.0,
+        height: 60.0,
         width: double.infinity,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: backgroundColor,
-            textStyle: const TextStyle(fontSize: 25),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25))),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: gradientColors ??
+                  [Colors.green, Colors.lightGreen], // Default gradient
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(51),
+                offset: const Offset(2, 4),
+                blurRadius: 8,
+              ),
+            ],
           ),
-          onPressed: onPressed,
-          child: Text(
-            title,
-            style: TextStyle(color: textColor),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent, // Make background transparent
+              shadowColor: Colors.transparent, // Remove shadow from button
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            onPressed: onPressed,
+            child: Text(
+              title,
+              style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
           ),
         ),
       ),
