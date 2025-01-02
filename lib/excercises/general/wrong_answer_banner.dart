@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lexaglot/excercises/general/colored_button.dart.dart';
+import 'package:lexaglot/excercises/general/colored_button.dart';
 
 class WrongAnswerBanner extends StatelessWidget {
   const WrongAnswerBanner({

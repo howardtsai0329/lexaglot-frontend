@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:lexaglot/excercises/general/colored_button.dart.dart';
+import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_button.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_game.dart';
-import 'package:lexaglot/mock_inputs/mock_matching_pairs.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_view.dart';
+import 'package:lexaglot/mock_inputs/mock_matching_pairs.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class MatchingPairsView extends StatefulWidget {
@@ -30,7 +30,7 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
   }
 
   startTimer() {
-    timer = Timer.periodic(const Duration(microseconds: 100), (t) {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (t) {
       setState(() {});
       if (game.isGameOver) {
         timer.cancel();

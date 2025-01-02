@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lexaglot/excercises/general/colored_button.dart.dart';
+import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
+import 'package:lexaglot/excercises/what_do_you_hear/what_do_you_hear_view.dart';
 
 class StartMenuView extends StatefulWidget {
   const StartMenuView({super.key});
@@ -10,6 +11,20 @@ class StartMenuView extends StatefulWidget {
 }
 
 class _StartMenuViewState extends State<StartMenuView> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(
+      const AssetImage('assets/images/Megumin.png'),
+      context,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +42,17 @@ class _StartMenuViewState extends State<StartMenuView> {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (BuildContext context) {
                     return const MatchingPairsView();
+                  }),
+                );
+              },
+              textColor: Colors.black,
+            ),
+            ColoredButton(
+              title: 'Currently Developing',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const WhatDoYouHearView();
                   }),
                 );
               },

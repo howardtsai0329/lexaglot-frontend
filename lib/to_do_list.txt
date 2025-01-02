@@ -1,0 +1,15 @@
+general: reduce timer usage
+
+translate sentence: draggable buttons
+
+complete translation: disable textfield after submission
+
+what do you hear: having popping noise when playing the audio
+
+
+bugs: 
+loading new images in exercise freezes my pc
+temporary fix: precache the image in startMenuView and passing it through context
+
+
+closing the app / emulator with the close button also freezes my pc for no reason

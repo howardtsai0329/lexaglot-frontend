@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lexaglot/excercises/complete_translation/complete_translation_view.dart';
-import 'package:lexaglot/excercises/general/colored_button.dart.dart';
+import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_button.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_game.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_item.dart';
@@ -31,7 +31,7 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
   }
 
   startTimer() {
-    timer = Timer.periodic(const Duration(microseconds: 100), (t) {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (t) {
       setState(() {});
       if (game.isGameOver) {
         timer.cancel();

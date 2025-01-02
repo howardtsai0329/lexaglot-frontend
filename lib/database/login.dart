@@ -47,7 +47,7 @@ Future<String> login(String username, String password) async {
     final Map<String, dynamic> responseData = jsonDecode(response.body);
     await storeRefreshToken(responseData['refresh_token']);
     dev.log(responseData['refresh_token']);
-    return responseData['token_type'] + " " + responseData['access_token'];
+    return '${responseData['token_type']} ${responseData['access_token']}';
   } else {
     throw Exception(
         'Failed to login: ${response.statusCode} - ${response.reasonPhrase}');
@@ -57,7 +57,7 @@ Future<String> login(String username, String password) async {
 Future<String> refreshToken() async {
   final refresh = await readRefreshToken() ?? '';
   final apiUrl = 'http://172.24.105.161:8000/refresh?refresh_token=$refresh';
-  
+
   final response = await http.post(
     Uri.parse(apiUrl),
     headers: <String, String>{
@@ -69,7 +69,7 @@ Future<String> refreshToken() async {
     final Map<String, dynamic> responseData = jsonDecode(response.body);
     await storeRefreshToken(responseData['refresh_token']);
     dev.log(responseData['refresh_token']);
-    return responseData['token_type'] + " " + responseData['access_token'];
+    return '${responseData['token_type']} ${responseData['access_token']}';
   } else {
     throw Exception(
         'Failed to login: ${response.statusCode} - ${response.reasonPhrase}');
