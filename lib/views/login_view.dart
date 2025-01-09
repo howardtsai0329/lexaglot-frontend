@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lexaglot/constants/routes.dart';
+import 'package:lexaglot/database/login.dart';
 import 'package:lexaglot/utilities/dialogs/error_dialog.dart';
+import 'dart:developer' as dev;
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -28,6 +29,29 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
+  Future<void> loginUser(String email, String password) async {
+    try {
+      // Authenticate user and get the JWT token
+      String token = await login(email, password);
+      await storeToken(token);
+
+      // Check token validity
+      if (isTokenExpired(token)) {
+        dev.log('Token is expired. Please refresh.');
+        throw Exception('Token expired. Please log in again.');
+      }
+
+      // Navigate to the start menu on successful login
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        homePageRoute,
+        (route) => false,
+      );
+    } catch (e) {
+      dev.log('Login error: $e');
+      await showErrorDialog(context, 'Error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +68,7 @@ class _LoginViewState extends State<LoginView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:
-                  const InputDecoration(hintText: " Enter your email here"),
+                  const InputDecoration(hintText: "Enter your email here"),
             ),
             TextField(
               controller: _password,
@@ -52,63 +76,30 @@ class _LoginViewState extends State<LoginView> {
               enableSuggestions: false,
               autocorrect: false,
               decoration:
-                  const InputDecoration(hintText: " Enter your password here"),
+                  const InputDecoration(hintText: "Enter your password here"),
             ),
             TextButton(
               onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                try {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                  final user = FirebaseAuth.instance.currentUser;
-                  if (user?.emailVerified ?? false) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      startMenuRoute,
-                      (route) => false,
-                    );
-                  } else {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      verifyEmailRoute,
-                      (route) => false,
-                    );
-                  }
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-not-found') {
-                    await showErrorDialog(
-                      context,
-                      'User not found',
-                    );
-                  } else if (e.code == 'wrong-password') {
-                    await showErrorDialog(
-                      context,
-                      'Wrong credentials',
-                    );
-                  } else {
-                    await showErrorDialog(
-                      context,
-                      'Error: ${e.code}',
-                    );
-                  }
-                } catch (e) {
+                final email = _email.text.trim();
+                final password = _password.text.trim();
+                if (email.isEmpty || password.isEmpty) {
                   await showErrorDialog(
-                    context,
-                    e.toString(),
-                  );
+                      context, 'Email and password cannot be empty.');
+                  return;
                 }
+                await loginUser(email, password);
               },
               child: const Text('Login'),
             ),
             TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    registerRoute,
-                    (route) => false,
-                  );
-                },
-                child: const Text('Not registered yet? Register here!'))
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  registerRoute,
+                  (route) => false,
+                );
+              },
+              child: const Text('Not registered yet? Register here!'),
+            ),
           ],
         ),
       ),

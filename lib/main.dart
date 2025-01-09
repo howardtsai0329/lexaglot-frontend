@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lexaglot/constants/routes.dart';
+import 'package:lexaglot/database/fetch_user_detail.dart';
 // import 'package:lexaglot/database/fetch_user_detail.dart';
 // import 'package:lexaglot/database/login.dart';
-import 'package:lexaglot/firebase_options.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
 import 'package:lexaglot/utilities/providers/theme_provider.dart';
 import 'package:lexaglot/views/home_page_view.dart';
@@ -13,6 +11,7 @@ import 'package:lexaglot/views/register_view.dart';
 import 'package:lexaglot/views/start_menu_view.dart';
 import 'package:lexaglot/views/verify_email_view.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer' as dev;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +41,7 @@ class MyApp extends StatelessWidget {
         startMenuRoute: (context) => const StartMenuView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
         matchingPairsRoute: (context) => const MatchingPairsView(),
+        homePageRoute: (context) => const HomePageView(),
       },
     );
   }
@@ -55,27 +55,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<UserDetail?> _fetchUser() async {
+    try {
+      final userDetail = await fetchUserDetail();
+      return userDetail;
+    } catch (e) {
+      dev.log('Error fetching user: $e');
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      ),
+    return FutureBuilder<UserDetail?>(
+      future: _fetchUser(),
       builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.done:
-            final user = FirebaseAuth.instance.currentUser;
-            if (user != null) {
-              if (user.emailVerified) {
-                return const HomePageView();
-              } else {
-                return const VerifyEmailView();
-              }
-            } else {
-              return const LoginView();
-            }
-          default:
-            return const CircularProgressIndicator();
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError || snapshot.data == null) {
+          return const LoginView(); // Redirect to login on error or null user.
+        } else {
+          return const HomePageView(); // Show home page if user is valid.
         }
       },
     );

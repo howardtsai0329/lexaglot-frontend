@@ -36,17 +36,13 @@ class UserDetail {
 }
 
 Future<UserDetail> fetchUserDetail() async {
-  const url = 'http://172.24.105.161:8000/users/me';
+  const url = 'https://api.lexaglot.com/users/me';
   var token = await getToken() ?? '';
   if (token == '') {
     const FormatException('No tokens returned');
   } else if (isTokenExpired(token)) {
-    dev.log(token);
     token = await refreshToken();
-    dev.log(token);
-  } else {
-    dev.log(token);
-  }
+  } 
   final response = await http.get(
     Uri.parse(url),
     headers: {
@@ -56,7 +52,6 @@ Future<UserDetail> fetchUserDetail() async {
   );
 
   if (response.statusCode == 200) {
-    dev.log('Response: ${response.body}');
     return UserDetail.fromJson(
       jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>,
     );

@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lexaglot/constants/routes.dart';
+import 'package:lexaglot/database/logout.dart';
 import 'package:lexaglot/enums/menu_action.dart';
 import 'package:lexaglot/utilities/dialogs/logout_dialog.dart';
 import 'package:lexaglot/views/chat_view.dart';
@@ -30,7 +30,7 @@ class _HomePageViewState extends State<HomePageView> {
                   case MenuAction.logout:
                     final shouldLogout = await showLogOutDialog(context);
                     if (shouldLogout) {
-                      await FirebaseAuth.instance.signOut();
+                      await logout();
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         loginRoute,
                         (_) => false,
@@ -38,10 +38,10 @@ class _HomePageViewState extends State<HomePageView> {
                     }
                   case MenuAction.settings:
                     Navigator.of(context).push(
-                  MaterialPageRoute(builder: (BuildContext context) {
-                    return const SettingsView();
-                  }),
-                );
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const SettingsView();
+                      }),
+                    );
                 }
               },
               itemBuilder: (context) {

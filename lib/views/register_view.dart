@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lexaglot/constants/routes.dart';
+import 'package:lexaglot/database/register.dart';
 import 'package:lexaglot/utilities/dialogs/error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
@@ -13,11 +13,15 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final TextEditingController _username;
+  late final TextEditingController _fullName;
 
   @override
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    _username = TextEditingController();
+    _fullName = TextEditingController();
     super.initState();
   }
 
@@ -25,6 +29,8 @@ class _RegisterViewState extends State<RegisterView> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _username.dispose();
+    _fullName.dispose();
     super.dispose();
   }
 
@@ -36,6 +42,20 @@ class _RegisterViewState extends State<RegisterView> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            TextField(
+              controller: _username,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration:
+                  const InputDecoration(hintText: " Enter your username here"),
+            ),
+            TextField(
+              controller: _fullName,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration:
+                  const InputDecoration(hintText: " Enter your full name here"),
+            ),
             TextField(
               controller: _email,
               enableSuggestions: false,
@@ -54,55 +74,39 @@ class _RegisterViewState extends State<RegisterView> {
             ),
             TextButton(
               onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
+                final username = _username.text.trim();
+                final fullName = _fullName.text.trim();
+                final email = _email.text.trim();
+                final password = _password.text.trim();
+
                 try {
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    email: email,
-                    password: password,
+                  // Register the user using the custom database API
+                  await register(username, password, email, fullName);
+
+                  // Navigate to the home page after auto-login
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    homePageRoute, // Replace with your home/start menu route
+                    (route) => false,
                   );
-                  final user = FirebaseAuth.instance.currentUser;
-                  await user?.sendEmailVerification();
-                  Navigator.of(context).pushNamed(verifyEmailRoute);
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    await showErrorDialog(
-                      context,
-                      'Weak password',
-                    );
-                  } else if (e.code == 'email-already-in-use') {
-                    await showErrorDialog(
-                      context,
-                      'Email is already in use',
-                    );
-                  } else if (e.code == 'invalid-email') {
-                    await showErrorDialog(
-                      context,
-                      'This is an invalid email address',
-                    );
-                  } else {
-                    await showErrorDialog(
-                      context,
-                      'Error ${e.code}',
-                    );
-                  }
                 } catch (e) {
+                  // Show error dialog on failure
                   await showErrorDialog(
                     context,
-                    e.toString(),
+                    'Registration failed: $e',
                   );
                 }
               },
               child: const Text('Register'),
             ),
             TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute,
-                    (route) => false,
-                  );
-                },
-                child: const Text('Already registered? Login here'))
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  loginRoute, // Navigate to the login page
+                  (route) => false,
+                );
+              },
+              child: const Text('Already registered? Login here'),
+            ),
           ],
         ),
       ),

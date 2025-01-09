@@ -4,7 +4,7 @@ translate sentence: draggable buttons
 
 complete translation: disable textfield after submission
 
-what do you hear: having popping noise when playing the audio
+what do you hear: popping noise when playing the audio
 
 
 bugs: 

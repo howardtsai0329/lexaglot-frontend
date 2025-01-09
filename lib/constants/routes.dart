@@ -3,3 +3,4 @@ const registerRoute = '/register/';
 const startMenuRoute = '/startMenu/';
 const verifyEmailRoute = '/verify-email/';
 const matchingPairsRoute = '/matching-pairs/';
+const homePageRoute = '/home-page/';
