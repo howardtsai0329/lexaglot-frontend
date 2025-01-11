@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/general/correct_answer_banner.dart';
 import 'package:lexaglot/excercises/general/wrong_answer_banner.dart';
-import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
 import 'package:lexaglot/excercises/what_do_you_hear/mutiple_choice_button.dart';
 import 'package:lexaglot/excercises/what_do_you_hear/what_do_you_hear_game.dart';
 import 'package:lexaglot/mock_inputs/mock_what_do_you_hear.dart';
@@ -124,7 +123,7 @@ class _WhatDoYouHearViewState extends State<WhatDoYouHearView> {
                       title: 'Continue',
                       onPressed: () => Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (BuildContext context) {
-                              return const MatchingPairsView();
+                              return const Scaffold();
                             }),
                           ),
                       textColor: Colors.black),

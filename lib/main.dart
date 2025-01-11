@@ -3,7 +3,6 @@ import 'package:lexaglot/constants/routes.dart';
 import 'package:lexaglot/database/fetch_user_detail.dart';
 // import 'package:lexaglot/database/fetch_user_detail.dart';
 // import 'package:lexaglot/database/login.dart';
-import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
 import 'package:lexaglot/utilities/providers/theme_provider.dart';
 import 'package:lexaglot/views/home_page_view.dart';
 import 'package:lexaglot/views/login_view.dart';
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
         registerRoute: (context) => const RegisterView(),
         startMenuRoute: (context) => const StartMenuView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
-        matchingPairsRoute: (context) => const MatchingPairsView(),
+        matchingPairsRoute: (context) => const Scaffold(),
         homePageRoute: (context) => const HomePageView(),
       },
     );

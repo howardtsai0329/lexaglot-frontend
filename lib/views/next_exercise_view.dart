@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:lexaglot/database/get_translate_sentence.dart';
+import 'package:lexaglot/excercises/matching_pairs/matching_pairs_data.dart';
+import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
+import 'package:lexaglot/excercises/translate_sentence/translate_sentence_data.dart';
 import 'package:lexaglot/database/login.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_view.dart';
 
@@ -82,9 +84,20 @@ class _NextExerciseScreenState extends State<NextExerciseScreen> {
               MaterialPageRoute(
                 builder: (BuildContext context) {
                   return TranslateSentenceView(
-                    correctTranslations: data.outputSentences,
-                    words: data.chunkOptions,
-                    sentenceBeforeTranslation: data.inputSentence,
+                    data: data,
+                  );
+                },
+              ),
+            );
+            break;
+
+          case 'matching':
+            final data = MatchingPairsData.fromJson(output.data);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return MatchingPairsView(
+                    data: data,
                   );
                 },
               ),

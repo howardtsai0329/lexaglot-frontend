@@ -1,22 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lexaglot/excercises/complete_translation/complete_translation_view.dart';
 import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_button.dart';
+import 'package:lexaglot/excercises/translate_sentence/translate_sentence_data.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_game.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_item.dart';
+import 'package:lexaglot/views/next_exercise_view.dart';
 
 class TranslateSentenceView extends StatefulWidget {
-  final List<String> correctTranslations;
-  final List<String> words;
-  final String sentenceBeforeTranslation;
+  final TranslateExerciseData data;
 
   const TranslateSentenceView({
     super.key,
-    required this.correctTranslations,
-    required this.words,
-    required this.sentenceBeforeTranslation,
+    required this.data,
   });
 
   @override
@@ -31,9 +28,9 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
   void initState() {
     super.initState();
     game = TranslateSentenceGame(
-      widget.correctTranslations,
-      widget.words,
-      widget.sentenceBeforeTranslation,
+      widget.data.outputSentences,
+      widget.data.chunkOptions,
+      widget.data.inputSentence,
     );
     startTimer();
   }
@@ -136,7 +133,7 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
                       title: 'Next Exercise',
                       onPressed: () => Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (BuildContext context) {
-                          return const CompleteTranslationView();
+                          return const NextExerciseScreen();
                         }),
                       ),
                       textColor: Colors.black,

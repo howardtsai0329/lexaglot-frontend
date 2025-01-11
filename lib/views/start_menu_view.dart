@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lexaglot/excercises/general/colored_button.dart';
-import 'package:lexaglot/excercises/matching_pairs/matching_pairs_view.dart';
 import 'package:lexaglot/views/next_exercise_view.dart';
 
 class StartMenuView extends StatefulWidget {
@@ -41,7 +40,7 @@ class _StartMenuViewState extends State<StartMenuView> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (BuildContext context) {
-                    return const MatchingPairsView();
+                    return const Scaffold();
                   }),
                 );
               },

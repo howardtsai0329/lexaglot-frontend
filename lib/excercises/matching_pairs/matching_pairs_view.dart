@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 
 import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_button.dart';
+import 'package:lexaglot/excercises/matching_pairs/matching_pairs_data.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_game.dart';
-import 'package:lexaglot/mock_inputs/mock_matching_pairs.dart';
 import 'package:lexaglot/views/next_exercise_view.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class MatchingPairsView extends StatefulWidget {
-  const MatchingPairsView({super.key});
+  final MatchingPairsData data;
+  const MatchingPairsView({
+    super.key,
+    required this.data,
+  });
 
   @override
   State<MatchingPairsView> createState() => _MatchingPairsViewState();
@@ -24,8 +28,8 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
   @override
   void initState() {
     super.initState();
-    game = MatchingPairsGame(mockMatchingPairsInput);
-    total = mockMatchingPairsInput.length;
+    game = MatchingPairsGame(widget.data.pairs);
+    total = widget.data.pairs.length;
     startTimer();
   }
 
@@ -73,7 +77,7 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
             Expanded(
               flex: 10,
               child: GridView.count(
-                crossAxisCount: mockMatchingPairsInput.length ~/ 2,
+                crossAxisCount: total ~/ 2,
                 childAspectRatio: 3,
                 mainAxisSpacing: 30,
                 crossAxisSpacing: 10,
