@@ -85,7 +85,7 @@ class _RegisterViewState extends State<RegisterView> {
 
                   // Navigate to the home page after auto-login
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    homePageRoute, // Replace with your home/start menu route
+                    homePageRoute, 
                     (route) => false,
                   );
                 } catch (e) {

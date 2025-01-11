@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 import 'package:http/http.dart' as http;
+import 'package:lexaglot/constants/constants.dart';
 import 'package:lexaglot/database/login.dart';
 
 Future<void> register(
@@ -8,8 +9,7 @@ Future<void> register(
   String? email,
   String? fullName,
 ) async {
-  String apiUrl =
-      'https://api.lexaglot.com/register?username=$username&password=$password';
+  String apiUrl = '$apiLink/register?username=$username&password=$password';
 
   if (email != null) {
     apiUrl += '&email=$email';

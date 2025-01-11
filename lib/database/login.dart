@@ -4,13 +4,14 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:lexaglot/constants/constants.dart';
 
 // Log in to get a JWT token
 Future<String> login(
   String username,
   String password,
 ) async {
-  const apiUrl = 'https://api.lexaglot.com/token';
+  const apiUrl = '$apiLink/token';
 
   final response = await http.post(
     Uri.parse(apiUrl),
@@ -40,7 +41,7 @@ Future<String> login(
 
 Future<String> refreshToken() async {
   final refresh = await readRefreshToken() ?? '';
-  final apiUrl = 'https://api.lexaglot.com/refresh?refresh_token=$refresh';
+  final apiUrl = '$apiLink/refresh?refresh_token=$refresh';
 
   final response = await http.post(
     Uri.parse(apiUrl),

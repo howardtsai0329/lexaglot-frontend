@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'package:http/http.dart' as http;
+import 'package:lexaglot/constants/constants.dart';
 import 'package:lexaglot/database/login.dart';
 
 class UserDetail {
@@ -36,7 +37,7 @@ class UserDetail {
 }
 
 Future<UserDetail> fetchUserDetail() async {
-  const url = 'https://api.lexaglot.com/users/me';
+  const url = '$apiLink/users/me';
   var token = await getToken() ?? '';
   if (token == '') {
     const FormatException('No tokens returned');

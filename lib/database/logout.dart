@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 import 'package:http/http.dart' as http;
+import 'package:lexaglot/constants/constants.dart';
 import 'package:lexaglot/database/login.dart';
 
 Future<void> logout() async {
@@ -10,7 +11,7 @@ Future<void> logout() async {
     return;
   }
 
-  final apiUrl = 'https://api.lexaglot.com/logout?refresh_token=$refreshToken';
+  final apiUrl = '$apiLink/logout?refresh_token=$refreshToken';
 
   try {
     final response = await http.post(
