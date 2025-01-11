@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 import 'package:http/http.dart' as http;
 
-class Data {
+class TranslateExerciseData {
   final String inputLanguage;
   final String outputLanguage;
   final String inputSentence;
   final List<String> outputSentences;
   final List<String> chunkOptions;
 
-  const Data({
+  const TranslateExerciseData({
     required this.inputLanguage,
     required this.outputLanguage,
     required this.inputSentence,
@@ -17,10 +17,10 @@ class Data {
     required this.chunkOptions,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) {
+  factory TranslateExerciseData.fromJson(Map<String, dynamic> json) {
     dev.log('Data JSON: $json');
     try {
-      return Data(
+      return TranslateExerciseData(
         inputLanguage: json['input_language'] as String,
         outputLanguage: json['output_language'] as String,
         inputSentence: json['input_sentence'] as String,
@@ -45,7 +45,7 @@ class Data {
 
 class Exercise {
   final String type;
-  final Data data;
+  final TranslateExerciseData data;
 
   const Exercise({
     required this.type,
@@ -57,7 +57,7 @@ class Exercise {
     try {
       return Exercise(
         type: json['type'] as String,
-        data: Data.fromJson(json['data'] as Map<String, dynamic>),
+        data: TranslateExerciseData.fromJson(json['data'] as Map<String, dynamic>),
       );
     } catch (e) {
       dev.log('Error parsing Exercise: $e');

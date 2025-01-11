@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_button.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_game.dart';
-import 'package:lexaglot/excercises/translate_sentence/translate_sentence_view.dart';
 import 'package:lexaglot/mock_inputs/mock_matching_pairs.dart';
+import 'package:lexaglot/views/next_exercise_view.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class MatchingPairsView extends StatefulWidget {
@@ -106,7 +106,7 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
                       title: 'Next Exercise',
                       onPressed: () => Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (BuildContext context) {
-                          return const TranslateSentenceView();
+                          return const NextExerciseScreen();
                         }),
                       ),
                       textColor: Colors.black,

@@ -6,10 +6,18 @@ import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_button.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_game.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_item.dart';
-import 'package:lexaglot/mock_inputs/mock_translate_sentence.dart';
 
 class TranslateSentenceView extends StatefulWidget {
-  const TranslateSentenceView({super.key});
+  final List<String> correctTranslations;
+  final List<String> words;
+  final String sentenceBeforeTranslation;
+
+  const TranslateSentenceView({
+    super.key,
+    required this.correctTranslations,
+    required this.words,
+    required this.sentenceBeforeTranslation,
+  });
 
   @override
   State<TranslateSentenceView> createState() => _TranslateSentenceViewState();
@@ -23,9 +31,9 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
   void initState() {
     super.initState();
     game = TranslateSentenceGame(
-      correctTranslations,
-      words,
-      sentenceBeforeTranslation,
+      widget.correctTranslations,
+      widget.words,
+      widget.sentenceBeforeTranslation,
     );
     startTimer();
   }
@@ -73,10 +81,10 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
                     const Expanded(
                       child: SizedBox(),
                     ),
-                    const Expanded(
+                    Expanded(
                       flex: 6,
                       child: Text(
-                        sentenceBeforeTranslation,
+                        game.beforeTranslation,
                         style: TextStyle(fontSize: 25),
                       ),
                     )
