@@ -38,11 +38,11 @@ class _StartMenuViewState extends State<StartMenuView> {
             ColoredButton(
               title: 'Learn',
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (BuildContext context) {
-                    return const Scaffold();
-                  }),
-                );
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(builder: (BuildContext context) {
+                //     return const Scaffold();
+                //   }),
+                // );
               },
               textColor: Colors.black,
             ),
