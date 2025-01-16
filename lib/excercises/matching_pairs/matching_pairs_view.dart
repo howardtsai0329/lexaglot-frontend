@@ -6,14 +6,15 @@ import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_button.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_data.dart';
 import 'package:lexaglot/excercises/matching_pairs/matching_pairs_game.dart';
-import 'package:lexaglot/views/next_exercise_view.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class MatchingPairsView extends StatefulWidget {
+  final VoidCallback onNext;
   final MatchingPairsData data;
   const MatchingPairsView({
     super.key,
     required this.data,
+    required this.onNext,
   });
 
   @override
@@ -108,11 +109,7 @@ class _MatchingPairsViewState extends State<MatchingPairsView> {
                     ),
                     ColoredButton(
                       title: 'Next Exercise',
-                      onPressed: () => Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return const NextExerciseScreen();
-                        }),
-                      ),
+                      onPressed: widget.onNext,
                       textColor: Colors.black,
                     ),
                   ],

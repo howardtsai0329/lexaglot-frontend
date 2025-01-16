@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lexaglot/constants/routes.dart';
 import 'package:lexaglot/database/fetch_user_detail.dart';
 // import 'package:lexaglot/database/fetch_user_detail.dart';
 // import 'package:lexaglot/database/login.dart';
 import 'package:lexaglot/utilities/providers/theme_provider.dart';
 import 'package:lexaglot/views/home_page_view.dart';
+// import 'package:lexaglot/views/language_selection_view.dart';
 import 'package:lexaglot/views/login_view.dart';
 import 'package:lexaglot/views/register_view.dart';
 import 'package:lexaglot/views/start_menu_view.dart';
@@ -54,20 +56,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<UserDetail?> _fetchUser() async {
+  Future<Map<String, dynamic>> _fetchUserAndLanguage() async {
     try {
       final userDetail = await fetchUserDetail();
-      return userDetail;
+      if (userDetail == null) {
+        return {'user': null, 'language': null};
+      }
+      final language = await getLanguage();
+      return {'user': userDetail, 'language': language};
     } catch (e) {
-      dev.log('Error fetching user: $e');
+      dev.log('Error fetching user or language: $e');
+      return {'user': null, 'language': null};
+    }
+  }
+
+  Future<String?> getLanguage() async {
+    const storage = FlutterSecureStorage();
+    try {
+      return await storage.read(key: 'language');
+    } catch (e) {
+      dev.log('Error reading language: $e');
       return null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<UserDetail?>(
-      future: _fetchUser(),
+    return FutureBuilder<Map<String, dynamic>>(
+      future: _fetchUserAndLanguage(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -76,7 +92,17 @@ class _HomePageState extends State<HomePage> {
         } else if (snapshot.hasError || snapshot.data == null) {
           return const LoginView(); // Redirect to login on error or null user.
         } else {
-          return const HomePageView(); // Show home page if user is valid.
+          final user = snapshot.data?['user'];
+          final language = snapshot.data?['language'];
+
+          if (user == null) {
+            return const LoginView(); // Redirect to login if user is null.
+          } else if (language == null) {
+            // return const LanguageSelectionView(); // Redirect to language selection if language is null.
+            return const HomePageView();
+          } else {
+            return const HomePageView(); // Show home page if both are valid.
+          }
         }
       },
     );

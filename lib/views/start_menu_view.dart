@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lexaglot/excercises/general/colored_button.dart';
-import 'package:lexaglot/views/next_exercise_view.dart';
+import 'package:lexaglot/views/exercise_stack.dart';
 
 class StartMenuView extends StatefulWidget {
   const StartMenuView({super.key});
@@ -52,7 +52,7 @@ class _StartMenuViewState extends State<StartMenuView> {
                 try {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (context) => NextExerciseScreen()),
+                        builder: (context) => ExerciseStackPage()),
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(

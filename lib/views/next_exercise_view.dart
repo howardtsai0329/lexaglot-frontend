@@ -85,6 +85,7 @@ class _NextExerciseScreenState extends State<NextExerciseScreen> {
                 builder: (BuildContext context) {
                   return TranslateSentenceView(
                     data: data,
+                    onNext: () => {},
                   );
                 },
               ),
@@ -98,6 +99,7 @@ class _NextExerciseScreenState extends State<NextExerciseScreen> {
                 builder: (BuildContext context) {
                   return MatchingPairsView(
                     data: data,
+                    onNext: () => {},
                   );
                 },
               ),

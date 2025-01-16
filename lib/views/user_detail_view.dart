@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DictionaryView extends StatelessWidget {
-  const DictionaryView({super.key});
+class UserDetailView extends StatelessWidget {
+  const UserDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {

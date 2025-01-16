@@ -3,11 +3,12 @@ import 'package:lexaglot/excercises/complete_translation/complete_translation_ga
 import 'package:lexaglot/excercises/general/colored_button.dart';
 import 'package:lexaglot/excercises/general/correct_answer_banner.dart';
 import 'package:lexaglot/excercises/general/wrong_answer_banner.dart';
-import 'package:lexaglot/excercises/what_do_you_hear/what_do_you_hear_view.dart';
 import 'package:lexaglot/mock_inputs/mock_complete_translation.dart';
 
 class CompleteTranslationView extends StatefulWidget {
-  const CompleteTranslationView({super.key});
+  final VoidCallback onNext;
+  
+  const CompleteTranslationView({super.key, required this.onNext});
 
   @override
   State<CompleteTranslationView> createState() =>
@@ -86,11 +87,7 @@ class _CompleteTranslationViewState extends State<CompleteTranslationView> {
                   message: 'You are correct',
                   button: ColoredButton(
                       title: 'Continue',
-                      onPressed: () => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return const WhatDoYouHearView();
-                            }),
-                          ),
+                      onPressed: widget.onNext,
                       textColor: Colors.black),
                 ),
               ),

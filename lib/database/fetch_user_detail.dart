@@ -36,14 +36,15 @@ class UserDetail {
   }
 }
 
-Future<UserDetail> fetchUserDetail() async {
+Future<UserDetail?> fetchUserDetail() async {
   const url = '$apiLink/users/me';
   var token = await getToken() ?? '';
   if (token == '') {
     const FormatException('No tokens returned');
+    return null;
   } else if (isTokenExpired(token)) {
     token = await refreshToken();
-  } 
+  }
   final response = await http.get(
     Uri.parse(url),
     headers: {

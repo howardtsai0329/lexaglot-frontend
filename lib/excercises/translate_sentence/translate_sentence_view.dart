@@ -6,14 +6,14 @@ import 'package:lexaglot/excercises/translate_sentence/translate_sentence_button
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_data.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_game.dart';
 import 'package:lexaglot/excercises/translate_sentence/translate_sentence_item.dart';
-import 'package:lexaglot/views/next_exercise_view.dart';
-
 class TranslateSentenceView extends StatefulWidget {
+  final VoidCallback onNext;
   final TranslateExerciseData data;
 
   const TranslateSentenceView({
     super.key,
     required this.data,
+    required this.onNext,
   });
 
   @override
@@ -131,11 +131,7 @@ class _TranslateSentenceViewState extends State<TranslateSentenceView> {
                     ),
                     ColoredButton(
                       title: 'Next Exercise',
-                      onPressed: () => Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return const NextExerciseScreen();
-                        }),
-                      ),
+                      onPressed: widget.onNext,
                       textColor: Colors.black,
                     ),
                   ],
